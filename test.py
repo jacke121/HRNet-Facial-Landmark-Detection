@@ -26,8 +26,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Train Face Alignment')
 
     parser.add_argument('--cfg', help='experiment configuration filename',
-                        default='../experiments/wflw/face_alignment_wflw_hrnet_w18.yaml', type=str)
-    parser.add_argument('--model-file', help='model parameters', default="../HR18-WFLW.pth", type=str)
+                        default='./experiments/wflw/face_alignment_wflw_hrnet_w18.yaml', type=str)
+    parser.add_argument('--model-file', help='model parameters', default="./HR18-WFLW.pth", type=str)
     # parser.add_argument('--model-file', help='model parameters', default="../hrnetv2_w18_imagenet_pretrained.pth", type=str)
 
     args = parser.parse_args()
@@ -68,7 +68,7 @@ def main():
     test_loader = DataLoader(
         dataset=dataset_type(config,
                              is_train=False),
-        batch_size=config.TEST.BATCH_SIZE_PER_GPU*len(gpus),
+        batch_size=1,
         shuffle=False,
         num_workers=config.WORKERS,
         pin_memory=config.PIN_MEMORY

@@ -59,7 +59,7 @@ class WFLW(data.Dataset):
 
         scale *= 1.25
         nparts = pts.shape[0]
-        img = np.array(Image.open(image_path).convert('RGB'), dtype=np.float32)
+        img_old = np.array(Image.open(image_path).convert('RGB'), dtype=np.float32)
 
         r = 0
         if self.is_train:
@@ -68,11 +68,11 @@ class WFLW(data.Dataset):
             r = random.uniform(-self.rot_factor, self.rot_factor) \
                 if random.random() <= 0.6 else 0
             if random.random() <= 0.5 and self.flip:
-                img = np.fliplr(img)
+                img = np.fliplr(img_old)
                 pts = fliplr_joints(pts, width=img.shape[1], dataset='wflw')
                 center[0] = img.shape[1] - center[0]
 
-        img = crop(img, center, scale, self.input_size, rot=r)
+        img = crop(img_old, center, scale, self.input_size, rot=r)
 
         target = np.zeros((nparts, self.output_size[0], self.output_size[1]))
         tpts = pts.copy()
